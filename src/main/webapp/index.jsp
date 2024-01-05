@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <%@ include file = "include/header.jsp" %>
-    
-    
-  <script>
+	
+	
+	<%@ include file="include/header.jsp" %>
+ 
+    <script>
     $('.carousel').carousel({
         interval: 2000 //changes the speed
     })
     </script>
+ 
     <div class="container">
 
 		<div class="row ">
@@ -109,4 +110,4 @@
     <!-- /.container -->
     </div>
     
-	<%@ include file = "include/footer.jsp" %>
+    <%@ include file="include/footer.jsp" %>

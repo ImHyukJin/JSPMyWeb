@@ -1,9 +1,8 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<body>
-	<jsp:include page="../include/header.jsp"/>
 
+	<%@ include file="../include/header.jsp" %>
 
 	<div align="center" class="div_center">
 		<h3>현재 비밀번호를 입력하세요.</h3>
@@ -16,6 +15,5 @@
 
 	</div>
 	
-	<jsp:include page="../include/footer.jsp"/>
-</body>
-</html>
+	<%@ include file="../include/footer.jsp" %>
+	

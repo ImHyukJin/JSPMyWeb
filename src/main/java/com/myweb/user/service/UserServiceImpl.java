@@ -4,32 +4,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.myweb.user.model.UserDAO;
+import com.myweb.user.model.UserVO;
 
-public class UserServiceImpl implements UserService{
-
+public class UserServiceImpl implements UserService {
+	
+	private UserDAO dao = UserDAO.getInstance();
+	
+	@Override
 	public int join(HttpServletRequest request, HttpServletResponse response) {
+		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String address = request.getParameter("address");
+		String gender = request.getParameter("gender");
+		
+		//가입에 대한 프로세스? -> id가 존재하는지 확인 -> insert
+		int result = dao.idCheck(id);
+		
+		if(result == 1) { //아이디 중복
+			return 1;
+		} else { //회원가입
+			UserVO vo = new UserVO(id, pw, name, email, address, gender, null);
+			dao.insertUser(vo);
 			
-			String id = request.getParameter("id");
-			String pw = request.getParameter("pw");
-			String name = request.getParameter("name");
-			String email = request.getParameter("email");
-			String address = request.getParameter("address");
-			String gender = request.getParameter("gender");
-			
-			System.out.println("넘어온 값: " + id);
-			//가입에 대한 프로세스? -> insert 가 올 때 id가 중복인지 아닌지 
-			
-			UserDAO dao =UserDAO.getInstance();
-			int result = dao.idcheck(id);
-			
-			if(result == 1) { //아이디 중복
-				return result ; 
-			}else { //회원가입진행
-				return 0;
-			}
-			
-			
+			return 0;
+		}
+		
+		
+		
+		
+		
 	}
 
-	
+	@Override
+	public UserVO login(HttpServletRequest request, HttpServletResponse response) {
+		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		UserVO vo = dao.login(id, pw);
+		return vo;
+	}
+
 }

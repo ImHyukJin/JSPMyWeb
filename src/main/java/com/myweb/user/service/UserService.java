@@ -3,9 +3,10 @@ package com.myweb.user.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface UserService {
+import com.myweb.user.model.UserVO;
 
-	public int join(HttpServletRequest request, HttpServletResponse response) ;
-		
+public interface UserService {
 	
+	public int join(HttpServletRequest request, HttpServletResponse response);
+	public UserVO login(HttpServletRequest request, HttpServletResponse response);
 }
