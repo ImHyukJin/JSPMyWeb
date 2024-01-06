@@ -9,4 +9,6 @@ public interface UserService {
 	
 	public int join(HttpServletRequest request, HttpServletResponse response);
 	public UserVO login(HttpServletRequest request, HttpServletResponse response);
+	public UserVO getUserInfo(HttpServletRequest request, HttpServletResponse response);
+	public int update(HttpServletRequest request, HttpServletResponse response);
 }

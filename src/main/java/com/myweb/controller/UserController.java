@@ -1,6 +1,8 @@
 package com.myweb.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -94,7 +96,40 @@ public class UserController extends HttpServlet {
 		
 		} else if(path.equals("/user/update.user")) { //정보수정화면
 			
+			//여기에서 회원에 대한 데이터를 가지고 화면으로 나감
+			/*
+			 * 1. DAO에서는 id기준으로 회원정보를 조회해서 UserVO저장
+			 * 2. service영역에서는 리턴해서 컨트롤러까지 회원정보를 가지고나옵니다.
+			 * 3. 컨트롤러에서는 vo를 request에 저장합니다.
+			 * 4. 화면에서 EL태그를 사용해서 value속성에 찍어주면 됩니다.
+			 * 
+			 */
+			UserVO vo = service.getUserInfo(request, response);
+			request.setAttribute("vo", vo);
+			
 			request.getRequestDispatcher("user_update.jsp").forward(request, response);
+		} else if(path.equals("/user/updateForm.user")) { //회원정보수정
+			
+			//0이면  실패 , 1이면 성공
+			int result = service.update(request , response);
+			
+			if(result == 1) {
+				//out객체
+				//브라우저 화면에 직접 응답을 해주는 형태 
+				response.setContentType("text/html; charset=UTF-8");
+				
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('업데이트에 성공했습니다')");
+				out.println("location.href='mypage.user';");
+				out.println("</script>");
+				
+				
+			}else {
+				response.sendRedirect("mypage.user");
+			}
+			
+			
 		}
 		
 		

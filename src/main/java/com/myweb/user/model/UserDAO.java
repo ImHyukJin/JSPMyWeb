@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import com.myweb.util.JdbcUtil;
 
@@ -134,6 +135,80 @@ public class UserDAO {
 	
 		return vo;
 	}
+	
+	//회원의 정보를 조회
+	public UserVO getUserInfo(String id) {
+		
+		UserVO vo = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from users where id = ?";
+		
+		try {
+			
+			conn = DriverManager.getConnection(url, uid, upw);
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { //다음이 있다면 true
+				
+				//데이터 ORM작업
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+				String gender =rs.getString("gender");
+				Timestamp regdate = rs.getTimestamp("regdate");
+				
+				vo = new UserVO(id, null, name, email, address, gender, regdate);
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
+		}
+
+		return vo;
+	}
+	
+	//회원 정보를 수정
+	public int update(UserVO vo) {
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "update users set pw = ? , name = ? , email = ? , address = ? , gender = ? where id = ?";
+		
+		try {
+			conn = DriverManager.getConnection(url , uid , upw);
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,vo.getPw());
+			pstmt.setString(2,vo.getName());
+			pstmt.setString(3,vo.getEmail());
+			pstmt.setString(4,vo.getAddress());
+			pstmt.setString(5,vo.getGender());
+			pstmt.setString(6,vo.getId());
+			
+			result = pstmt.executeUpdate(); // 0이면 실패 , 1이면 성공
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(conn, pstmt , null);
+		}
+		
+		return result;
+	}
+	
 	
 	
 	

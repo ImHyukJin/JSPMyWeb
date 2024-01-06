@@ -14,6 +14,12 @@
 
 		<a href="">[회원 탈퇴]</a>
 	</div>
+	
+	<script>
+		alert("  ㄴ")
+		location.href = 'https://google.com';
+	
+	</script>
 
 	<%@ include file="../include/footer.jsp" %>
 	
