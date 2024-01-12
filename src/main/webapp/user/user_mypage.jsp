@@ -12,14 +12,14 @@
 
 		<a href="update.user">[회원 정보 변경]</a>&nbsp;&nbsp;
 
-		<a href="">[회원 탈퇴]</a>
+		<a href="delete.user">[회원 탈퇴]</a>
 	</div>
 	
-	<script>
+	<!-- <script>
 		alert("  ㄴ")
 		location.href = 'https://google.com';
 	
-	</script>
+	</script> -->
 
 	<%@ include file="../include/footer.jsp" %>
 	

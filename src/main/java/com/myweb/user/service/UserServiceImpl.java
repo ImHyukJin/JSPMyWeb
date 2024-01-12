@@ -1,5 +1,7 @@
 package com.myweb.user.service;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,7 +59,7 @@ public class UserServiceImpl implements UserService {
 		
 		//회원 아이디는 세션에 있습니다.
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("user_id");
+		String id = (String)session.getAttribute("id");
 		
 		//getUserInfo호출
 		UserVO vo = dao.getUserInfo(id);
@@ -89,6 +91,29 @@ public class UserServiceImpl implements UserService {
 		
 		
 		return result;
+	}
+
+
+	
+	public int delete(HttpServletRequest request, HttpServletResponse response) {
+		//세션에서 아이디를 얻음
+		HttpSession session = request.getSession();
+		
+		String id =(String)session.getAttribute("id");
+		
+		String pw = request.getParameter("pw");
+		
+		UserVO vo = dao.login(id, pw);
+		
+		if(vo != null) { //비밀번호가 일치
+			//delete
+			dao.delete(id);
+			session.invalidate(); //세션삭제
+			
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 }
